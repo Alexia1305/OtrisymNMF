@@ -189,7 +189,7 @@ function UpdateS(X, r, w, v)
     return S
 end
 
-function OtrisymNMF_CD(X, r, maxiter,epsi,init_algo="k_means",time_limit=5)
+function OtrisymNMF_CD_sparse(X, r, maxiter,epsi,init_algo="k_means",time_limit=5)
     debut = time()
     n=size(X,1)
     w=zeros(n,1)
