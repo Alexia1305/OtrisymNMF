@@ -1,6 +1,6 @@
 # OtrisymNMF: Orthogonal Symmetric Nonnegative Matrix Tri-Factorization
 
- This repository provides implementations in julia, matlab and python of the **Orthogonal Symmetric Nonnegative Matrix Tri-Factorization** (OtrisymNMF) algorithm, as proposed in the paper:
+ This repository provides implementations in in three different programming languages: **Julia**, **MATLAB**, and **Python** of the **Orthogonal Symmetric Nonnegative Matrix Tri-Factorization** (OtrisymNMF) algorithm, as proposed in the paper:
 
 **Dache, Alexandra, Arnaud Vandaele, and Nicolas Gillis.**  
 *"Orthogonal Symmetric Nonnegative Matrix Tri-Factorization."*  
@@ -16,9 +16,10 @@ The algorithm aims to solve the following optimization problem:
 Where:
 - \( X \) is a given symmetric nonnegative matrix (e.g., adjacency matrix of an undirected graph).
 - \( W \) is a matrix representing the assignment of elements to \( r \) communities.
-- \( S \) is a central matrix describing interactions between communities.for **Orthogonal Symmetric Nonnegative Matrix Tri-Factorization (OtrisymNMF)** in three different programming languages: **Julia**, **MATLAB**, and **Python**. Each language-specific implementation is located in its respective folder, with a corresponding README file for detailed instructions.
+- \( S \) is a central matrix describing interactions between communities.
 
-The julia folder contains the tests described in the paper *Orthogonal Symmetric Nonnegative Matrix Tri-Factorization* (DOI: [10.1109/MLSP58920.2024.10734715](https://doi.org/10.1109/MLSP58920.2024.10734715)) 
+Each language-specific implementation is located in its respective folder, with a corresponding README file for detailed instructions.
+The Julia folder contains the tests described in the paper *Orthogonal Symmetric Nonnegative Matrix Tri-Factorization* (DOI: [10.1109/MLSP58920.2024.10734715](https://doi.org/10.1109/MLSP58920.2024.10734715)) 
 
 
 
