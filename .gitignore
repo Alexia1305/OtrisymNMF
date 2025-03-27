@@ -13,3 +13,6 @@ NMF_book/nmfbook-master/algorithms/separable NMF/VCA/ReadMe.txt
 NMF_book/nmfbook-master/algorithms/separable NMF/SNPA/ReadMe.txt
 NMF_book/nmfbook-master/ALexandra/WSW matrix.fig
 NMF_book/nmfbook-master/ALexandra/WSW graph.fig
+/.idea
+/.vscode
+/julia/.idea
