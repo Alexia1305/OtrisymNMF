@@ -1,3 +1,10 @@
+"""
+Classification of facials images of the CBCL dataset
+
+"""
+
+
+
 using MAT
 using Printf
 using Random
@@ -13,6 +20,7 @@ include("../algo/OtrisymNMF.jl")
 include("../algo/ONMF.jl")
 include("../algo/symNMF.jl")
 include("utils/affichage.jl")
+
 function erreur_kmeans(X, assignments, centroids)
     n = size(X, 1)  # Nombre total de points
     r = length(centroids)  # Nombre total de clusters
@@ -280,6 +288,8 @@ Person=Ag[:,indices_melanges]
 matrice_img=affichage(Person,6,19,19,1)
 file_name="CBCL_5.png"
 save(file_name,matrice_img)
+
+
 # file_path = "dataset/CBCL.mat"
 # mat = matread(file_path)
 # A = mat["X"]

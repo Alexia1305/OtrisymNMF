@@ -1,3 +1,11 @@
+
+
+"""
+Comparison of reconstruction errors of OtrisymNMF, ONMF et SymNMF on CBCL dataset 
+
+"""
+
+
 using MAT
 using Printf
 using Random
@@ -33,7 +41,6 @@ function test()
 
     # Initialisation des tableaux pour stocker les temps et les erreurs
     n=size(X)[1]
-    println(n)
     Wb=zeros(n,r)
     temps_execution = zeros(nbr_algo,nbr_tests)
     erreurs = zeros(nbr_algo,nbr_tests)
