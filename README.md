@@ -41,4 +41,7 @@ Each folder contains a detailed README with specific instructions for running th
 ## Citing
 
 If you use this code for your research, please cite the following paper:
+Dache, Alexandra, Arnaud Vandaele, and Nicolas Gillis. "Orthogonal Symmetric Nonnegative Matrix Tri-Factorization." IEEE International Workshop on Machine Learning for Signal Processing. Institute of Electrical and Electronic Engineers (IEEE), United States, 2024.
+
+
 
