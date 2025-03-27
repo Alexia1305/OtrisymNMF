@@ -10,7 +10,7 @@ using Images
 include("../algo/OtrisymNMF.jl")
 include("../algo/ONMF.jl")
 include("../algo/symNMF.jl")
-include("affichage.jl")
+include("utils/affichage.jl")
 Random.seed!(123)
 
 

@@ -12,7 +12,7 @@ using ColorSchemes
 include("../algo/OtrisymNMF.jl")
 include("../algo/ONMF.jl")
 include("../algo/symNMF.jl")
-include("affichage.jl")
+include("utils/affichage.jl")
 function erreur_kmeans(X, assignments, centroids)
     n = size(X, 1)  # Nombre total de points
     r = length(centroids)  # Nombre total de clusters

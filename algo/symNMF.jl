@@ -3,6 +3,8 @@ using LinearAlgebra
 using SparseArrays
 using Hungarian
 include("SSPA.jl")
+
+
 function frobenius_sym_loss(A::Matrix{Float64}, M, MA::Matrix{Float64})
     t1 = 0.5 * (norm(M) ^ 2 + norm(A' * A) ^ 2) # A' * A is a small r x r sized matrix
     
