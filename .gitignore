@@ -17,3 +17,5 @@ NMF_book/nmfbook-master/ALexandra/WSW graph.fig
 /.vscode
 /julia/.idea
 /python/OtrisymNMF/.idea
+/python/__pycache__
+/python/.idea
