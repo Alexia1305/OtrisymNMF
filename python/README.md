@@ -33,7 +33,7 @@ Then, import it as follows:
 
 ```python
 import OtrisymNMF
-
+```
 ## Example
 
 An example notebook, **`Example.ipynb`**, is provided in the repository to help you get started with the OtrisymNMF method.
