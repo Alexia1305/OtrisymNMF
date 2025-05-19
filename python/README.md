@@ -5,9 +5,9 @@ Orthogonal Symmetric Nonnegative Matrix Trifactorization using Coordinate Descen
 
 Given a symmetric matrix X ≥ 0, OtrisymNMF finds matrices W ≥ 0 and S ≥ 0 such that:
 
-\[
-\min_{W \geq 0, S \geq 0} \|X - WSW^T\|_F^2 \quad \text{s.t.} \quad W^TW = I
-\]
+$$
+\min_{W \geq 0, S \geq 0} \|\|X - WSW^T\|\|_F^2 \quad \text{s.t.} \quad W^TW = I
+$$
 
 ## Description
 
