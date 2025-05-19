@@ -86,43 +86,41 @@ function run_experiment()
     end
 end
 
-# Function to plot and save the results
-function plot_results(epsilon, results, ylabel, filename)
-    labels = ["init kmeans", "init sspa", "init spa", "init random"]
-    colors = [:blue, :red, :purple, :green]
+function plot_results(epsilon, results, ylabel, filename; metric_index=1)
+    labels = ["init kmeans", "init sspa", "init random", "init spa"]
+    colors = [:blue, :red, :green, :purple]
     linestyles = [:solid, :dash, :dot, :dashdot]
 
-    plot(epsilon, results[1][:, 4], label=labels[1], xlabel="epsilon", ylabel=ylabel, linewidth=2, linecolor=colors[1])
-    scatter!(epsilon, results[1][:, 4], markercolor=colors[1])
+    p = plot(title=ylabel, xlabel="Noise level (ε)", ylabel=ylabel, legend=:bottomleft)
 
-    for i in 2:4
-        plot!(epsilon, results[i][:, 4], label=labels[i], linestyle=linestyles[i], linecolor=colors[i])
-        scatter!(epsilon, results[i][:, 4], markercolor=colors[i])
+    for i in 1:4
+        y = results[i][:, metric_index]
+        plot!(p, epsilon, y, label=labels[i], linecolor=colors[i], linestyle=linestyles[i], linewidth=2)
+        scatter!(p, epsilon, y, markercolor=colors[i],label="")
     end
 
-    savefig(filename)
+    savefig(p, filename)
 end
 
-# Save the results to a text file
 function save_results(filename, epsilon, results)
     open(filename, "w") do f
         for (name, res) in zip(["kmeans", "sspa", "random", "spa"], results)
             write(f, "$name:\n")
             for row in eachrow(res)
-                write(f, "$row\n")
+                write(f, "$(collect(row))\n")
             end
         end
     end
 end
 
-# Run the experiment
+# Exécution
 run_experiment()
 
-# Generate the figures
-plot_results(epsilon, results, "Success rate (%)", "figure4.png")
-plot_results(epsilon, results, "Accuracy (%)", "figure.png")
-plot_results(epsilon, results, "Time (s)", "figure2.png")
-plot_results(epsilon, results, "Relative error", "figure3.png")
+# Figures
+plot_results(epsilon, results, "Success rate (%)", "success_rate.png", metric_index=4)
+plot_results(epsilon, results, "Accuracy (%)", "accuracy.png", metric_index=1)
+plot_results(epsilon, results, "Time (s)", "time.png", metric_index=2)
+plot_results(epsilon, results, "Relative error", "rel_error.png", metric_index=3)
 
-# Save the results
+# Sauvegarde
 save_results("resultats_initssed.txt", epsilon, results)

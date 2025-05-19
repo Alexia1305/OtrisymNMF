@@ -2,18 +2,19 @@ using Distributions
 using LinearAlgebra
 using SparseArrays
 using Random
+using Statistics
 using LinearAlgebra
 using MAT
+
 include("NNLS.jl")
 
 function SSPA(X, r, p, options)
     """
-    Smoothed Vertex Component Analysis (SVCA)
+    Smoothed Successive Projection Algorithm (SSPA)
 
-    Heuristic to solve the following problem:
-    Given a matrix X, find a matrix W such that X ≈ WH for some H ≥ 0,
-    under the assumption that each column of W has `p` columns of X close
-    to it (called the `p` proximal latent points).
+    This heuristic algorithm finds a matrix W such that X ≈ WH for some H ≥ 0,
+    under the assumption that each column of W has p columns of X close to it
+    (called the p proximal latent points).
 
     # Parameters:
     - `X::Matrix{Float64}` : Input data matrix of size (m, n).
@@ -41,7 +42,7 @@ function SSPA(X, r, p, options)
     end
     
     if options[:lra] == 1
-        Y, S, Z = svds(X, nsv=r)
+        Y, S, Z = svds(X,r)
         Z = S * Z'
     else
         Z = X
@@ -93,6 +94,88 @@ function SSPA(X, r, p, options)
     
     return W, K
 end
+
+function SVCA(X, r, p, options)
+    """
+    Smoothed Vertex Component Analysis (SVCA)
+
+    Heuristic to find a matrix W such that X ≈ W*H with H ≥ 0,
+    assuming each column of W is close to p columns of X (the p proximal latent points).
+
+    Arguments:
+        X::Matrix: Input data matrix (m × n), must be ≥ 0.
+        r::Int: Number of components (columns of W).
+        p::Int: Number of proximal latent points.
+        options::Dict:
+            "lra" => 1: use low-rank approximation (default: 0),
+            "average" => 1: use mean, 0: use median (default: 0)
+
+    Returns:
+        W::Matrix: The estimated matrix such that X ≈ W*H.
+        K::Matrix{Int}: Indices of selected data points.
+    """
+    if issparse(X)
+        X=Matrix(X)
+    end
+    
+    X = float.(X)
+
+    if !haskey(options, :lra)
+        options[:lra] = 0
+    end
+    if !haskey(options, :average)
+        options[:average] = 0
+    end
+
+    # Low-rank approximation using SVD
+    U, S_vec, Vt = svds(X, r)
+    S = Diagonal(S_vec)
+
+    if options[:lra] == 1
+        X = S * Vt  # Replace X with low-rank approximation
+    end
+
+    m, n = size(X)
+    V = zeros(m, 0)  # Empty basis
+    W = zeros(m, r)
+    K = zeros(Int, r, p)
+
+    for k in 1:r
+        diru = U * randn(r)
+
+        if k > 1
+            diru = diru - V * (V' * diru)
+        end
+
+        u = diru' * X
+        b = sortperm(vec(u))  # Sort indices by values in u
+
+        if abs(median(u[b[1:p]])) < abs(median(u[b[end-p+1:end]]))
+            b = reverse(b)
+        end
+
+        K[k, :] = b[1:p]
+
+        if p == 1
+            W[:, k] = X[:, K[k, 1]]
+        else
+            if options[:average] == 1
+                W[:, k] = mean(X[:, K[k, :]], dims=2)[:]
+            else
+                W[:, k] = mapslices(median, X[:, K[k, :]], dims=2)[:]
+            end
+        end
+
+        V = updateorthbasis(V, W[:, k])
+    end
+
+    if options[:lra] == 1
+        W = U * W
+    end
+
+    return W, K
+end
+
 
 function svds(A, k)
     U, Σ, V = svd(A)

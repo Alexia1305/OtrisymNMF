@@ -35,7 +35,7 @@ function OtrisymNMF_CD(X, r, maxiter,epsi,init_algo="k_means",time_limit=5)
     - `maxiter::Int=1000` : Maximum iterations for each trial.
     - `epsi::Float64=1e-7` : Convergence tolerance.
     - `time_limit::Int=5` : Time limit in seconds.
-    - `init_algo::Union{String, Nothing}="kmeans` : Initialization method ("random", "SSPA", "kmeans", "SPA").
+    - `init_algo::Union{String, Nothing}="kmeans` : Initialization method ("random", "svca","sspa", "k_means", "spa").
    
 
     # Returns:
@@ -64,8 +64,7 @@ function OtrisymNMF_CD(X, r, maxiter,epsi,init_algo="k_means",time_limit=5)
         S = 0.5 * (matrice_aleatoire + transpose(matrice_aleatoire))
         
         
-    end 
-    if init_algo=="k_means"
+    elseif init_algo=="k_means"
         # initialisation kmeans 
        
         Xnorm = similar(X, Float64)
@@ -103,9 +102,8 @@ function OtrisymNMF_CD(X, r, maxiter,epsi,init_algo="k_means",time_limit=5)
         #OPtimisation de S
         S=UpdateS(X,r,w,v)
           
-
-    end 
-    if init_algo=="spa"
+ 
+    elseif init_algo=="spa"
         K = spa(X, r, epsi)
         WO=X[:,K]
         n = size(X, 1)
@@ -142,8 +140,7 @@ function OtrisymNMF_CD(X, r, maxiter,epsi,init_algo="k_means",time_limit=5)
         
         
         
-    end
-    if init_algo=="sspa"
+    elseif init_algo=="sspa"
 
         # Initialization with SSPA
         
@@ -183,8 +180,50 @@ function OtrisymNMF_CD(X, r, maxiter,epsi,init_algo="k_means",time_limit=5)
         
         S = UpdateS(X, r, w, v)
         
+    elseif init_algo=="svca"
+
+        # Initialization with SSPA
+        
+        n = size(X, 1)
+        p=max(2,Int(floor(0.1*n/r)))
+        options = Dict(:average => 1) 
+        WO,K=SVCA(X, r, p, options)
+
+        norm2x = sqrt.(sum(X.^2, dims=1))
+        Xn = X .* (1 ./ (norm2x .+ 1e-16))
+        normX2 = sum(X .^ 2)
+
+        e = Float64[]
+
+        HO = orthNNLS(X, WO, Xn)
+        W=HO'
+        for k in 1:r
+            nw=norm(W[:, k],2)
+            if nw==0
+                continue
+            end     
+            W[:, k] .= W[:, k] ./ nw
+           
+        end
+        for i in 1:n
+           
+            idx = findfirst(x -> x != 0, W[i, :])  
+        
+            if idx !== nothing
+                v[i] = idx       
+                w[i] = W[i, idx] 
+            else
+                v[i] = 1         
+                w[i] = W[i, 1]
+            end
+        end
+        
+        S = UpdateS(X, r, w, v)
+        
 
     end 
+    
+
     erreur_prec = calcul_erreur(X,S,w,v)
    
     erreur = erreur_prec
