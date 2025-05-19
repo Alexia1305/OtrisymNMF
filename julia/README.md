@@ -27,7 +27,7 @@ Where:
      - `r::Int` : Number of columns of W (Number of communities).
      - `maxiter::Int` : Maximum number of iterations (default: 1000).
      - `epsi::Float64` : Convergence tolerance (default: 1e-7).
-     - `init_algo::String` : Initialization method (`"random"`, `"k_means"`, `"sspa"`).
+     - `init_algo::String` : Initialization method (`"random"`,`"svca"`, `"k_means"`, `"sspa"`).
      - `time_limit::Int` : Time limit for each trial in seconds (default: 5).
    - **Returns**:
      - `W::Matrix{Float64}` : Assignment matrix.
