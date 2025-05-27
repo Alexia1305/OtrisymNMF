@@ -14,6 +14,10 @@ def orthNNLS(M, U, Mn=None):
     Returns:
         V (numpy.ndarray): The matrix V of size (r, n) that approximates M.
         norm2v (numpy.ndarray): The squared norms of the columns of V.
+    see F. Pompili, N. Gillis, P.-A. Absil and F. Glineur, "Two Algorithms for
+    Orthogonal Nonnegative Matrix Factorization with Application to
+    Clustering", Neurocomputing 141, pp. 15-25, 2014.
+
     """
 
     if Mn is None:
