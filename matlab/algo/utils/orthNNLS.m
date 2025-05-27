@@ -3,6 +3,10 @@
 % min_{norm2v >=0, V >= 0 and VV^T=D} ||M-U*V||_F^2 
 % 
 % where the columns of Mn are normalized columns of M 
+% see F. Pompili, N. Gillis, P.-A. Absil and F. Glineur, "Two Algorithms for
+% Orthogonal Nonnegative Matrix Factorization with Application to
+% Clustering", Neurocomputing 141, pp. 15-25, 2014.
+
 
 function [V,norm2v] = orthNNLS(M,U,Mn) 
 
