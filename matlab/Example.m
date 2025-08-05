@@ -25,7 +25,6 @@ node_colors = community_colors(v, :);
 figure;
 h = plot(G); 
 title('Partition by OtrisymNMF of the karate club ')
-% Ajuster la taille des nœuds en fonction des degrés
 h.MarkerSize = node_sizes;
 h.NodeColor = node_colors;
 
@@ -44,13 +43,9 @@ end
 num_clusters = max(clusters);
 
 % Network plot
-% Générer une palette de couleurs : une couleur unique pour chaque cluster
 colors = lines(num_clusters);  % 'lines' est une palette MATLAB, tu peux aussi utiliser jet, parula, etc.
-
-% Assigner une couleur à chaque nœud en fonction de son cluster
 nodeColors = colors(clusters, :);  % Chaque ligne de nodeColors est la couleur du nœud correspondant
 figure;
-% Afficher le graphe avec les couleurs assignées
 p = plot(G, 'NodeLabel',labels(:));  % Créer le plot du graphe
 p.NodeCData = clusters;  % Utiliser les clusters comme données pour les couleurs
 colormap(colors);        % Appliquer la palette de couleurs
@@ -58,6 +53,7 @@ colormap(colors);        % Appliquer la palette de couleurs
 title('Dolphins Network with real partition');
 X=adjacency(G);
 r=2;
+
 % OtrisymNMF
 
 [w2,v2,S2,erreur2] = OtrisymNMF_CD(X,r);
@@ -68,7 +64,7 @@ num_v = max(v2);
 colors = lines(num_v); 
 nodeColors = colors(v2, :);  
 figure;
-p = plot(G, 'NodeLabel', labels(:));  % Créer le plot du graphe
+p = plot(G, 'NodeLabel', labels(:));  
 title('Dolphins Network with partition find by OtrisymNMF');
 p.NodeCData = v2; 
 colormap(colors);        

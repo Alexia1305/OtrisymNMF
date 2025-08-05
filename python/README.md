@@ -1,7 +1,7 @@
 
 # OtrisymNMF
 
-Orthogonal Symmetric Nonnegative Matrix Trifactorization using Coordinate Descent.
+Orthogonal Symmetric Nonnegative Matrix Trifactorization using Block Coordinate Descent.
 
 Given a symmetric matrix X ≥ 0, OtrisymNMF finds matrices W ≥ 0 and S ≥ 0 such that:
 
