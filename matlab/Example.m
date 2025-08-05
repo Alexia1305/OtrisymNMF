@@ -7,10 +7,10 @@ load("data/karate.mat")
 
 %OtrisymNMF
 r=2;
-[w,v2,S,erreur] = OtrisymNMF_CD(A,r,'numTrials',10);
+[w,v,S,erreur] = OtrisymNMF_CD(A,r,'numTrials',1);
 disp("NMI of OtrisymNMF partition on karate club : ")
 
-disp(computeNMI(Label_karate,v2))
+disp(computeNMI(Label_karate,v))
 
 % Display network
 G = graph(A);
@@ -20,7 +20,7 @@ node_sizes = 5 + 1.2 * node_degrees;
 community_colors = [1 0 0; 0 1 0; 0 0 1];  
 
 
-node_colors = community_colors(v2, :);
+node_colors = community_colors(v, :);
 
 figure;
 h = plot(G); 
@@ -60,19 +60,19 @@ X=adjacency(G);
 r=2;
 % OtrisymNMF
 
-[w,v,S,erreur] = OtrisymNMF_CD(X,r);
+[w2,v2,S2,erreur2] = OtrisymNMF_CD(X,r);
 disp("NMI of OtrisymNMF partition on Dolphins : ")
-disp(computeNMI(clusters,v))
+disp(computeNMI(clusters,v2))
 
-num_v = max(v);
+num_v = max(v2);
 colors = lines(num_v); 
-nodeColors = colors(v, :);  
+nodeColors = colors(v2, :);  
 figure;
 p = plot(G, 'NodeLabel', labels(:));  % Créer le plot du graphe
 title('Dolphins Network with partition find by OtrisymNMF');
-p.NodeCData = v; 
+p.NodeCData = v2; 
 colormap(colors);        
-vsp=v;
+vsp=v2;
 
 
 
